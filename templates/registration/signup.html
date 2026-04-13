@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 5rem auto;">
+    <div class="card">
+        <h2 style="margin-bottom: 2rem; text-align: center;">Begin Your <span class="gradient-text">Journey</span></h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Create Account</button>
+        </form>
+        
+        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+            Already have an account? <a href="{% url 'login' %}" style="color: var(--primary-color);">Login here</a>
+        </p>
+    </div>
+</div>
+
+<style>
+    label { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.3rem; display: block; }
+    .helptext { display: block; font-size: 0.7rem; color: #475569; margin-top: 0.2rem; }
+</style>
+{% endblock %}

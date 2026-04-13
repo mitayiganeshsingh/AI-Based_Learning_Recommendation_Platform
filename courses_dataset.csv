@@ -1,0 +1,16 @@
+course_id,title,description,category,skills,popularity
+1,Python for Data Science,Learn the fundamentals of Python for data analysis.,Data Science,Python;Pandas;NumPy,4.8
+2,Advanced Machine Learning,Deep dive into neural networks and deep learning.,AI & ML,Machine Learning;Deep Learning;PyTorch,4.9
+3,Web Development with Django,Build robust web applications using Django framework.,Web Development,Django;Python;JavaScript,4.7
+4,React.js Essentials,Master React hooks and state management.,Web Development,React;JavaScript;Redux,4.6
+5,Cybersecurity Fundamentals,Protect systems and networks from digital attacks.,Cybersecurity,Network Security;Ethical Hacking,4.5
+6,Cloud Computing with AWS,Introduction to cloud services and AWS architecture.,Cloud Computing,AWS;Cloud Infrastructure,4.4
+7,SQL for Analytics,Master database querying for business intelligence.,Data Analytics,SQL;Database Management,4.3
+8,AI & Ethics,Understanding the social impact of artificial intelligence.,AI & ML,AI Ethics;Social Impact,4.2
+9,Full Stack JavaScript,Become a full stack developer with Node and React.,Web Development,Node.js;Express;React;JavaScript,4.8
+10,Natural Language Processing,Processing human language with machines.,AI & ML,NLP;Python;TensorFlow,4.7
+11,UI/UX Design Masterclass,Design beautiful user interfaces.,Design,Figma;UI/UX Patterns,4.6
+12,DevOps Bootcamp,CI/CD pipelines and infrastructure as code.,DevOps,Docker;Kubernetes;Jenkins,4.5
+13,Mobile App Dev with Flutter,Build cross-platform mobile apps.,Mobile Dev,Flutter;Dart,4.4
+14,Blockchain Technology,Understanding decentralized ledgers.,FinTech,Blockchain;Ethereum;Solidity,4.3
+15,Data Visualization with Tableau,Create interactive dashboards.,Data Analytics,Tableau;DataViz,4.2

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 4rem auto;">
+    <div class="card" style="padding: 3rem;">
+        <span class="tag" style="background: rgba(168, 85, 247, 0.1); color: #a855f7; margin-bottom: 1rem;">{{ course.category }}</span>
+        <h1 style="font-size: 2.5rem; margin-bottom: 1.5rem;">{{ course.title }}</h1>
+        
+        <div style="display: flex; gap: 2rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1.5rem;">
+            <div>
+                <div class="stat-label">Rating</div>
+                <div style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">{{ course.popularity_score }} / 5.0</div>
+            </div>
+            <div>
+                <div class="stat-label">Duration</div>
+                <div style="font-weight: 700; font-size: 1.2rem;">12 Weeks</div>
+            </div>
+            <div>
+                <div class="stat-label">Level</div>
+                <div style="font-weight: 700; font-size: 1.2rem;">Intermediate</div>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 1rem;">About this course</h3>
+        <p style="color: var(--text-muted); line-height: 1.7; font-size: 1.1rem; margin-bottom: 2.5rem;">
+            {{ course.description }}
+        </p>
+
+        <h3 style="margin-bottom: 1rem;">What you will learn</h3>
+        <div style="margin-bottom: 3rem;">
+            {% for skill in course.skills_taught.all %}
+                <span class="tag" style="font-size: 0.9rem; padding: 0.5rem 1rem;">{{ skill.name }}</span>
+            {% endfor %}
+        </div>
+
+        {% if user.is_authenticated %}
+            {% if is_enrolled %}
+                <button class="btn-primary" style="width: 100%; opacity: 0.7; cursor: not-allowed;" disabled>Already Enrolled</button>
+            {% else %}
+                <a href="{% url 'enroll_course' course.id %}" class="btn-primary" style="width: 100%; display: block; text-align: center; text-decoration: none;">Enroll Now</a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}" class="btn-primary" style="width: 100%; display: block; text-align: center; text-decoration: none;">Login to Enroll</a>
+        {% endif %}
+    </div>
+
+    <!-- Review Section -->
+    <div class="card">
+        <h2 style="margin-bottom: 2rem;">Student <span class="gradient-text">Feedback</span></h2>
+        
+        {% if user.is_authenticated %}
+        <form method="post" style="margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--glass-border);">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Rating (1-5)</label>
+                <input type="number" name="rating" min="1" max="5" value="5" style="width: 80px;">
+            </div>
+            <div class="form-group">
+                <label>Share your experience (AI will analyze your sentiment)</label>
+                <textarea name="comment" rows="3" placeholder="I learned a lot from this course..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Submit Review</button>
+        </form>
+        {% endif %}
+
+        <div class="reviews">
+            {% for review in reviews %}
+            <div style="margin-bottom: 2rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 0.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <strong>{{ review.student.user.username }}</strong>
+                    <div>
+                        <span class="tag" style="background: 
+                            {% if review.sentiment == 'Positive' %}rgba(34, 197, 94, 0.1){% elif review.sentiment == 'Negative' %}rgba(239, 68, 68, 0.1){% else %}rgba(148, 163, 184, 0.1){% endif %};
+                            color: {% if review.sentiment == 'Positive' %}#22c55e{% elif review.sentiment == 'Negative' %}#ef4444{% else %}#94a3b8{% endif %};">
+                            AI Sentiment: {{ review.sentiment }}
+                        </span>
+                        <span style="color: #fbbf24; font-weight: 700; margin-left: 1rem;">{{ review.rating }} ★</span>
+                    </div>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">{{ review.comment }}</p>
+                <small style="color: rgba(255,255,255,0.2); font-size: 0.75rem;">{{ review.created_at|date:"M d, Y" }}</small>
+            </div>
+            {% empty %}
+                <p style="color: var(--text-muted); text-align: center;">No reviews yet. Be the first to analyze your experience!</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

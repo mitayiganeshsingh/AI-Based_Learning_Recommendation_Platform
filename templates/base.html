@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI LearnPath | Personalized Recommendations</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="nav-brand">AI LearnPath</a>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Courses</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'profile_update' %}">Profile</a>
+                <a href="{% url 'logout' %}" style="opacity: 0.7;">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}" class="btn-primary" style="margin-left: 1rem;">Get Started</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container fade-in">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="card" style="border-left: 4px solid var(--primary-color);">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer style="text-align: center; padding: 4rem 2rem; color: var(--text-muted); font-size: 0.8rem;">
+        &copy; 2026 AI LearnPath Platform. Driven by AI for your Career.
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

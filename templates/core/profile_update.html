@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 2rem auto;">
+    <div class="card">
+        <h2 style="margin-bottom: 2rem;">Update Your <span class="gradient-text">Learner Profile</span></h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>Career Goal</label>
+                <input type="text" name="career_goal" value="{{ profile.career_goal }}" placeholder="e.g. Senior Data Scientist, AI Researcher">
+                <small style="color: var(--text-muted);">This helps us identify your required skills.</small>
+            </div>
+
+            <div class="form-group">
+                <label>Current Skills (comma separated)</label>
+                <input type="text" name="skills" value="{{ current_skills_str }}" placeholder="Python, SQL, AWS...">
+            </div>
+
+            <div class="form-group">
+                <label>Interests / Keywords</label>
+                <textarea name="interests" rows="4" placeholder="Deep learning, robotics, microservices...">{{ profile.interests }}</textarea>
+                <small style="color: var(--text-muted);">Keywords we should use for content matching.</small>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1.5rem;">Save Preferences</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

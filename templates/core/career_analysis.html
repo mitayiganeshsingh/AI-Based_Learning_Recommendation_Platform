@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 3rem auto;">
+    <div style="text-align: center; margin-bottom: 4rem;">
+        <h1 style="font-size: 3rem; margin-bottom: 1rem;">Career Path <span class="gradient-text">Analysis</span></h1>
+        <p style="color: var(--text-muted);">Deep dive into your skill distribution and professional identity.</p>
+    </div>
+
+    <!-- Main Prediction -->
+    <div class="card" style="text-align: center; padding: 4rem 2rem; border: 2px solid var(--primary-color);">
+        <div style="display: inline-block; padding: 0.5rem 1.5rem; background: rgba(99, 102, 241, 0.1); border-radius: 999px; color: var(--primary-color); font-weight: 700; margin-bottom: 1.5rem;">
+            PRIMARY IDENTITY
+        </div>
+        <h2 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;">{{ predicted_career }}</h2>
+        <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">Our AI model analyzed your current skill matrix and identified a strong correlation with the industry standard for this role.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;">
+        <!-- Skill Matrix -->
+        <div class="card">
+            <h3 style="margin-bottom: 1.5rem;">Your Skill Matrix</h3>
+            <div style="display: flex; flex-wrap: wrap;">
+                {% for skill in profile.current_skills.all %}
+                    <span class="tag" style="background: rgba(168, 85, 247, 0.1); padding: 0.5rem 1rem;">{{ skill.name }}</span>
+                {% endfor %}
+            </div>
+            {% if not profile.current_skills.all %}
+                <p style="color: var(--text-muted); font-style: italic;">No skills added yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Matching Scores -->
+        <div class="card">
+            <h3 style="margin-bottom: 1.5rem;">Cross-Role Compatibility</h3>
+            {% for role, score in scores %}
+            <div style="margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem;">
+                    <span>{{ role }}</span>
+                    <span style="color: var(--primary-color); font-weight: 700;">{{ score }}%</span>
+                </div>
+                <div style="height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                    <div style="width: {{ score }}%; height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 2rem; background: rgba(236, 72, 153, 0.05); border-color: rgba(236, 72, 153, 0.2);">
+        <h3 style="margin-bottom: 1rem;">AI Insight</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+            Your profile shows varied interests. While you align most strongly with <strong>{{ predicted_career }}</strong>, your secondary skills indicate growth potential in other domains as well. Our recommendation engine has been adjusted to prioritize content that bridges these gaps.
+        </p>
+    </div>
+
+    <div style="text-align: center; margin-top: 3rem;">
+        <a href="{% url 'dashboard' %}" class="btn-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
