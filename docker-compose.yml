@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+
+  web:
+    build: .
+    container_name: learning_app
+    working_dir: /app/app
+
+    command: gunicorn learning_platform.wsgi:application --bind 0.0.0.0:8000
+
+    volumes:
+      - .:/app
+
+    expose:
+      - "8000"
+
+    env_file:
+      - .env
+
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_server
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./app/staticfiles:/app/app/staticfiles
+      - ./app/media:/app/app/media
+
+    depends_on:
+      - web
+
+    restart: always
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus_monitor
+
+    ports:
+      - "9090:9090"
+
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+    restart: always
